@@ -120,8 +120,8 @@
       <div class="tips nes-container with-title">
         <p class="title">
           <a href="JavaScript:void(0)" class="nes-badge is-icon">
-            <span class="is-dark">嗨~</span>
-            <span class="is-warning">说明</span>
+            <span class="is-dark">Hi~</span>
+            <span class="is-warning">Tips</span>
           </a>
         </p>
         <div class="lists">
@@ -158,6 +158,18 @@
           <span class="is-primary">1.1.0</span>
         </a>
       </div>
+      <section>
+        <dialog class="nes-dialog is-dark is-rounded" id="dialog-dark-rounded">
+          <form method="dialog">
+            <p class="title">Tips</p>
+            <p>请输入链接后保存.</p>
+            <menu class="dialog-menu">
+              <button class="nes-btn">取消</button>
+              <button class="nes-btn is-primary">知道了</button>
+            </menu>
+          </form>
+        </dialog>
+      </section>
     </div>
     <script type="text/javascript">
       (function getLink() {
@@ -173,7 +185,7 @@
         let btns = document.getElementById("btns");
         btns.onclick = () => {
           if (inputs.value == "") {
-            alert("请输入链接！");
+            document.getElementById("dialog-dark-rounded").showModal();
           } else {
             localStorage.setItem("linkurl", inputs.value);
             let link = document.getElementById("link");
