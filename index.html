@@ -155,7 +155,7 @@
           class="nes-badge is-splited"
         >
           <span class="is-dark">Github</span>
-          <span class="is-primary">1.1.1</span>
+          <span class="is-primary">1.1.0</span>
         </a>
       </div>
       <section>
@@ -200,7 +200,8 @@
           // links.href =
           //   "unmgg://app.unwulian.com/redirect/h5/web?url=" +
           //   encodeURIComponent(inputs.value);
-          link.href = encodeURIComponent(inputs.value);
+          // link.href = encodeURIComponent(inputs.value);
+          link.href = inputs.value;
         }
 
         // 获取保存按钮
@@ -216,7 +217,8 @@
             // link.href =
             //   "unmgg://app.unwulian.com/redirect/h5/web?url=" +
             //   encodeURIComponent(inputs.value);
-            link.href = encodeURIComponent(inputs.value);
+            // link.href = encodeURIComponent(inputs.value);
+            link.href = inputs.value;
             // 把输入的地址存入缓存
             localStorage.setItem("linkurl", inputs.value);
             localStorage.setItem("OLD_LINK", inputs.value);
@@ -236,7 +238,6 @@
         route.onclick = () => {
           // 撤回操作点击事件
           let link = localStorage.getItem("OLD_LINK") || "";
-          console.log(inputs.value, link);
           if (inputs.value === link) {
             document.getElementById("dialog-dark-rounded-two").showModal();
           } else {
