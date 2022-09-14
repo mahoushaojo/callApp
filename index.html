@@ -58,7 +58,24 @@
         display: block;
         padding: 0 10px;
       }
-
+      .history {
+        width: 90vw;
+        margin: 0 auto;
+        margin-top: 30px;
+        display: none;
+      }
+      .history_list li {
+        word-break: break-all;
+        margin-bottom: 6px;
+      }
+      .history_list li:active {
+        text-decoration: underline;
+      }
+      .history_btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
       .btn_box {
         width: 90vw;
         margin: 0 auto;
@@ -101,6 +118,19 @@
           class="nes-input"
           placeholder="请输入地址"
         />
+      </div>
+      <div class="history nes-container with-title" id="history">
+        <p class="title">
+          <a href="JavaScript:void(0)" class="nes-badge">
+            <span class="is-success">历史地址</span>
+          </a>
+        </p>
+        <ul class="nes-list is-disc history_list" id="history_select"></ul>
+        <div class="history_btn">
+          <a class="nes-btn is-small" href="JavaScript:void(0)" id="clearBtn"
+            >清 空</a
+          >
+        </div>
       </div>
       <div class="btn_box">
         <button type="button" id="btns" class="nes-btn is-primary">
@@ -210,6 +240,10 @@
         let link = localStorage.getItem("linkurl") || "";
         // 获取唤起APP按钮
         let links = document.getElementById("link");
+        // 获取历史记录
+        let history = JSON.parse(localStorage.getItem("history")) || [];
+        // 监听点击历史记录
+        setHistory(history);
         inputs.value = link;
         // 如果缓存中存在链接
         if (link && link !== "") {
@@ -220,7 +254,7 @@
 
         // 获取保存按钮
         let btns = document.getElementById("btns");
-        btns.onclick = () => {
+        btns.onclick = async () => {
           // 保存按钮点击事件
           if (inputs.value == "") {
             // 如果地址为空 进行弹窗提示
@@ -233,9 +267,29 @@
             // 把输入的地址存入缓存
             localStorage.setItem("linkurl", inputs.value);
             localStorage.setItem("OLD_LINK", inputs.value);
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            if (!history.length) {
+              history.push(inputs.value);
+            } else {
+              let index = history.findIndex((link) => {
+                return link === String(inputs.value);
+              });
+              if (index !== -1) {
+                history[index] = inputs.value;
+              } else {
+                if (history.length >= 5) {
+                  history[0] = inputs.value;
+                } else {
+                  history.push(inputs.value);
+                }
+              }
+            }
+            await localStorage.setItem("history", JSON.stringify(history));
+            let newhistory =
+              (await JSON.parse(localStorage.getItem("history"))) || [];
+            clearEle(newhistory);
           }
         };
-
         // 获取重置按钮
         let reset = document.getElementById("reset");
         reset.onclick = () => {
@@ -257,6 +311,43 @@
             localStorage.setItem("linkurl", inputs.value);
           }
         };
+        // 处理历史记录
+        function setHistory(history) {
+          if (history.length) {
+            let history_box = document.getElementById("history");
+            history_box.addEventListener("click", selectHistoryLink);
+            history_box.style.display = "block";
+            let history_select = document.getElementById("history_select");
+            for (let index = 0; index < history.length; index++) {
+              const element = history[index];
+              let option = document.createElement("li");
+              option.innerText = element;
+              history_select.appendChild(option);
+            }
+          } else {
+            let history_box = document.getElementById("history");
+            history_box.style.display = "none";
+          }
+        }
+        // 清理元素
+        function clearEle(history) {
+          let history_select = document.getElementById("history_select");
+          while ((ele = history_select.children.item(0))) {
+            ele.remove();
+          }
+          setHistory(history);
+        }
+        // 选择历史地址
+        function selectHistoryLink(event) {
+          if (event.target.localName == "li") {
+            let link = event.target.innerText;
+            inputs.value = link;
+          }
+          if (event.target.id == "clearBtn") {
+            localStorage.removeItem("history");
+            clearEle([]);
+          }
+        }
       })();
     </script>
   </body>
