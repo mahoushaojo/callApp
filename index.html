@@ -197,11 +197,8 @@
         // 如果缓存中存在链接
         if (link && link !== "") {
           // 为唤APP按钮赋值
-          // links.href =
-          //   "unmgg://app.unwulian.com/redirect/h5/web?url=" +
-          //   encodeURIComponent(inputs.value);
-          // link.href = encodeURIComponent(inputs.value);
-          link.href = inputs.value;
+          links.href =
+            "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
         }
 
         // 获取保存按钮
@@ -214,11 +211,8 @@
           } else {
             // 如果地址不为空 缓存输入的地址 并设置APP按钮的地址
             let link = document.getElementById("link");
-            // link.href =
-            //   "unmgg://app.unwulian.com/redirect/h5/web?url=" +
-            //   encodeURIComponent(inputs.value);
-            // link.href = encodeURIComponent(inputs.value);
-            link.href = inputs.value;
+            link.href =
+              "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
             // 把输入的地址存入缓存
             localStorage.setItem("linkurl", inputs.value);
             localStorage.setItem("OLD_LINK", inputs.value);
