@@ -110,7 +110,7 @@
           重 置
         </button>
         <button type="button" id="route" class="nes-btn is-error">
-          保存路由
+          撤回操作
         </button>
       </div>
       <div class="tips nes-container with-title">
@@ -135,7 +135,7 @@
               >按钮.
             </li>
             <li class="list">
-              点击<span class="nes-text is-primary">`保存路由`</span
+              点击<span class="nes-text is-primary">`保存`</span
               >可以存储输入的页面缓存.
             </li>
             <li class="list">
@@ -170,43 +170,77 @@
           </form>
         </dialog>
       </section>
+      <section>
+        <dialog
+          class="nes-dialog is-dark is-rounded"
+          id="dialog-dark-rounded-two"
+        >
+          <form method="dialog">
+            <p class="title">Tips</p>
+            <p>未作任何修改.</p>
+            <menu class="dialog-menu">
+              <button class="nes-btn is-primary">知道了</button>
+            </menu>
+          </form>
+        </dialog>
+      </section>
     </div>
     <script type="text/javascript">
       (function getLink() {
+        // 获取input内容
         let inputs = document.getElementById("inputs");
+        // 获取缓存中的地址
         let link = localStorage.getItem("linkurl") || "";
+        // 获取唤起APP按钮
+        let links = document.getElementById("link");
         inputs.value = link;
+        // 如果缓存中存在链接
         if (link && link !== "") {
-          let links = document.getElementById("link");
+          // 为唤APP按钮赋值
           links.href =
             "unmgg://app.unwulian.com/redirect/h5/web?url=" +
             encodeURIComponent(inputs.value);
         }
+
+        // 获取保存按钮
         let btns = document.getElementById("btns");
         btns.onclick = () => {
+          // 保存按钮点击事件
           if (inputs.value == "") {
+            // 如果地址为空 进行弹窗提示
             document.getElementById("dialog-dark-rounded").showModal();
           } else {
-            localStorage.setItem("linkurl", inputs.value);
+            // 如果地址不为空 缓存输入的地址 并设置APP按钮的地址
             let link = document.getElementById("link");
             link.href =
               "unmgg://app.unwulian.com/redirect/h5/web?url=" +
               encodeURIComponent(inputs.value);
+            // 把输入的地址存入缓存
+            localStorage.setItem("linkurl", inputs.value);
+            localStorage.setItem("OLD_LINK", inputs.value);
           }
         };
+
+        // 获取重置按钮
         let reset = document.getElementById("reset");
         reset.onclick = () => {
-          let inputs = document.getElementById("inputs");
+          // 重置按钮点击事件，清空地址栏 并清空缓存
           inputs.value = "";
+          localStorage.removeItem("linkurl");
         };
+
+        // 获取撤回操作按钮
         let route = document.getElementById("route");
         route.onclick = () => {
-          if (inputs.value == "") {
-            alert("请输入链接！");
+          // 撤回操作点击事件
+          let link = localStorage.getItem("OLD_LINK") || "";
+          console.log(inputs.value, link);
+          if (inputs.value === link) {
+            document.getElementById("dialog-dark-rounded-two").showModal();
           } else {
+            let link = localStorage.getItem("OLD_LINK") || "";
+            inputs.value = link;
             localStorage.setItem("linkurl", inputs.value);
-            let link = document.getElementById("link");
-            link.href = "unmgg://app.unwulian.com/redirect/h5" + inputs.value;
           }
         };
       })();
