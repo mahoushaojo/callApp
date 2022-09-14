@@ -128,20 +128,37 @@
             </li>
             <li class="list">
               使用方式：本地项目通过<br /><span class="nes-text is-error"
-                >`npm run serve:isApp`</span
+                >`npm run serve:<环境>`</span
               >方式运行项目后在上面输入框内输入服务地址,保存后点击<span
                 class="nes-text is-error"
                 >`唤起APP`</span
               >按钮.
             </li>
             <li class="list">
-              点击<span class="nes-text is-primary">`保存`</span
+              点击<span class="nes-text is-warning">`保存`</span
               >可以存储输入的页面缓存.
             </li>
             <li class="list">
-              注意： 该功能只能对本地服务进行<span class="nes-text is-warning"
-                >`页面样式、APP_API方法`</span
-              >的调试等,由于后端接口Cookie的跨域 并不能对接口进行调试.
+              环境：<span class="nes-text is-primary">`dev、test、beta`</span
+              ><br />
+              栗子：<span class="nes-text is-primary"
+                >`pnpm run serve:dev`</span
+              >
+            </li>
+            <li class="list">
+              注意：需要使用对应环境的<span class="nes-text is-success"
+                >`APP`</span
+              >才能进行接口调试
+            </li>
+            <li class="list">
+              拓展：如果可以在<span class="nes-text is-success">`APP`</span
+              >内进行环境的切换，可以更进一步的提升对接效率，因为避免了重复和频繁的找<span
+                class="nes-text is-success"
+                >`APP`</span
+              >进行打包.
+              <br />
+              但是暂时<span class="nes-text is-success">`APP`</span
+              >端不支持该功能.
             </li>
           </ul>
         </div>
