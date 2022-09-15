@@ -243,14 +243,23 @@
         let links = document.getElementById("link");
         // 获取历史记录
         let history = JSON.parse(localStorage.getItem("history")) || [];
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        // 获取判断是否是ios环境
+        let isIOS = userAgent && /iphone|ipad|ipod|ios/.test(userAgent);
         // 监听点击历史记录
         setHistory(history);
         inputs.value = link;
         // 如果缓存中存在链接
         if (link && link !== "") {
           // 为唤APP按钮赋值
-          links.href =
-            "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
+          if (isIOS) {
+            links.href =
+              "cn.qmai.newAssistant.LSYOpenHttp://h5url=" +
+              encodeURIComponent(inputs.value);
+          } else {
+            links.href =
+              "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
+          }
         }
 
         // 获取保存按钮
@@ -263,8 +272,14 @@
           } else {
             // 如果地址不为空 缓存输入的地址 并设置APP按钮的地址
             let link = document.getElementById("link");
-            link.href =
-              "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
+            if (isIOS) {
+              links.href =
+                "cn.qmai.newAssistant.LSYOpenHttp://h5url=" +
+                encodeURIComponent(inputs.value);
+            } else {
+              links.href =
+                "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
+            }
             // 把输入的地址存入缓存
             localStorage.setItem("linkurl", inputs.value);
             localStorage.setItem("OLD_LINK", inputs.value);
