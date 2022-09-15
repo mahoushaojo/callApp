@@ -18,6 +18,6 @@
 
 ​**使用**：使用 `pnpm run serve:<环境>`来开启服务,使用`Network`对应的`IP`地址来打开服务, 打开[工具](https://mahoushaojo.github.io/callApp/index.html) 安装工具中说明的操作
 
-**环境**：`dev、test、beta`
+**环境**：`dev、test、beta、pre`
 
 **例子**：`pnpm run serve:dev`
