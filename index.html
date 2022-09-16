@@ -31,6 +31,10 @@
 
   <body>
     <style>
+      .IS2P {
+        font-family: "Press Start 2P";
+        font-size: 12px;
+      }
       .content {
         margin-bottom: 40px;
       }
@@ -47,7 +51,7 @@
       .box .title_text {
         text-align: center;
         margin-top: 10px;
-        font-size: 24px;
+        font-size: 20px;
       }
 
       .input-url input {
@@ -57,6 +61,8 @@
         margin-top: 60px;
         display: block;
         padding: 0 10px;
+        font-family: "Press Start 2P";
+        font-size: 12px;
       }
       .history {
         width: 90vw;
@@ -67,6 +73,8 @@
       .history_list li {
         word-break: break-all;
         margin-bottom: 6px;
+        font-family: "Press Start 2P";
+        font-size: 12px;
       }
       .history_list li:active {
         text-decoration: underline;
@@ -109,45 +117,48 @@
     <div class="content">
       <a id="link" href="#" class="box nes-container is-rounded is-dark">
         <i class="nes-smartphone"></i>
-        <p class="title_text">唤起APP</p>
+        <p class="IS2P title_text">OPEN_APP</p>
       </a>
       <div class="input-url nes-field">
         <input
           type="text"
           id="inputs"
           class="nes-input"
-          placeholder="请输入地址"
+          placeholder="link..."
         />
       </div>
       <div class="btn_box">
-        <button type="button" id="btns" class="nes-btn is-primary">
-          保 存
+        <button type="button" id="btns" class="IS2P nes-btn is-primary">
+          Save
         </button>
-        <button type="button" id="reset" class="nes-btn is-warning">
-          重 置
+        <button type="button" id="reset" class="IS2P nes-btn is-warning">
+          Reset
         </button>
-        <button type="button" id="route" class="nes-btn is-error">
-          撤回操作
+        <button type="button" id="route" class="IS2P nes-btn is-error">
+          Back
         </button>
       </div>
       <div class="history nes-container with-title" id="history">
         <p class="title">
           <a href="JavaScript:void(0)" class="nes-badge">
-            <span class="is-success">历史地址</span>
+            <span class="is-success IS2P">History</span>
           </a>
         </p>
         <ul class="nes-list is-disc history_list" id="history_select"></ul>
         <div class="history_btn">
-          <a class="nes-btn is-small" href="JavaScript:void(0)" id="clearBtn"
-            >清 空</a
+          <a
+            class="nes-btn is-small IS2P"
+            href="JavaScript:void(0)"
+            id="clearBtn"
+            >Clear</a
           >
         </div>
       </div>
       <div class="tips nes-container with-title">
         <p class="title">
           <a href="JavaScript:void(0)" class="nes-badge is-icon">
-            <span class="is-dark">Hi~</span>
-            <span class="is-warning">Tips</span>
+            <span class="is-dark IS2P">Hi</span>
+            <span class="is-warning IS2P">Tips</span>
           </a>
         </p>
         <div class="lists">
@@ -203,8 +214,8 @@
           target="_blank"
           class="nes-badge is-splited"
         >
-          <span class="is-dark">Github</span>
-          <span class="is-primary">1.1.0</span>
+          <span class="is-dark IS2P">Github</span>
+          <span class="is-primary IS2P">1.1.0</span>
         </a>
       </div>
       <section>
