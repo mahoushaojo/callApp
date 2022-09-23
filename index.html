@@ -53,14 +53,27 @@
         margin-top: 10px;
         font-size: 24px;
       }
-
+      .default_select {
+        width: 90vw;
+        margin-top: 30px;
+        margin-left: 5vw;
+      }
+      .TOP_SELECT {
+        margin-top: 40px;
+      }
+      .nes-select {
+        width: 90vw;
+        margin: 0 auto;
+      }
+      .nes-select select {
+        padding: 0 10px;
+      }
       .input-url input {
         width: 90vw;
         overflow: hidden;
         margin: 0 auto;
-        margin-top: 60px;
         display: block;
-        padding: 0 10px;
+        padding: 2px 10px;
         font-family: "Press Start 2P";
         font-size: 12px;
       }
@@ -90,7 +103,7 @@
         margin-top: 40px;
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
       }
       .tips {
         width: 90vw;
@@ -120,10 +133,23 @@
       }
     </style>
     <div class="content">
-      <a id="link" href="#" class="box nes-container is-rounded is-dark">
+      <a
+        id="link"
+        href="JavaScript:void(0)"
+        class="box nes-container is-rounded is-dark"
+      >
         <i class="nes-smartphone"></i>
         <p class="title_text">唤起APP</p>
       </a>
+      <label for="default_select" class="default_select TOP_SELECT IS2P"
+        >APP</label
+      >
+      <div class="nes-select">
+        <select required id="default_select">
+          <option value="0" selected>企迈助手</option>
+        </select>
+      </div>
+      <label for="default_select" class="default_select IS2P">LINK</label>
       <div class="input-url nes-field">
         <input
           type="text"
@@ -139,9 +165,7 @@
         <button type="button" id="reset" class="nes-btn is-warning">
           重 置
         </button>
-        <button type="button" id="route" class="nes-btn is-error">
-          撤回操作
-        </button>
+        <button type="button" id="route" class="nes-btn is-error">撤 回</button>
       </div>
       <div class="history nes-container with-title" id="history">
         <p class="title">
@@ -249,12 +273,30 @@
     </div>
     <script type="text/javascript">
       (function getLink() {
+        let urlLink = "";
         // 获取input内容
         let inputs = document.getElementById("inputs");
         // 获取缓存中的地址
         let link = localStorage.getItem("linkurl") || "";
         // 获取唤起APP按钮
         let links = document.getElementById("link");
+        // 为唤起APP按钮绑定监听事件
+        links.addEventListener("click", (e) => {
+          if (!inputs.value) {
+            document.getElementById("dialog-dark-rounded").showModal();
+            return;
+          } else if (inputs.value !== urlLink) {
+            if (isIOS) {
+              urlLink =
+                "cn.qmai.newAssistant.LSYOpenHttp://h5url=" +
+                encodeURIComponent(inputs.value);
+            } else {
+              urlLink =
+                "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
+            }
+          }
+          window.location.href = urlLink;
+        });
         // 获取历史记录
         let history = JSON.parse(localStorage.getItem("history")) || [];
         const userAgent = window.navigator.userAgent.toLowerCase();
@@ -267,11 +309,11 @@
         if (link && link !== "") {
           // 为唤APP按钮赋值
           if (isIOS) {
-            links.href =
+            urlLink =
               "cn.qmai.newAssistant.LSYOpenHttp://h5url=" +
               encodeURIComponent(inputs.value);
           } else {
-            links.href =
+            urlLink =
               "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
           }
         }
@@ -287,11 +329,11 @@
             // 如果地址不为空 缓存输入的地址 并设置APP按钮的地址
             let link = document.getElementById("link");
             if (isIOS) {
-              links.href =
+              urlLink =
                 "cn.qmai.newAssistant.LSYOpenHttp://h5url=" +
                 encodeURIComponent(inputs.value);
             } else {
-              links.href =
+              urlLink =
                 "qmzs://h5debug?h5url=" + encodeURIComponent(inputs.value);
             }
             // 把输入的地址存入缓存
@@ -341,6 +383,8 @@
             localStorage.setItem("linkurl", inputs.value);
           }
         };
+        // 处理地址信息
+
         // 处理历史记录
         function setHistory(history) {
           if (history.length) {
